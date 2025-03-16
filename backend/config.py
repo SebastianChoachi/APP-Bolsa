@@ -1,6 +1,5 @@
 MYSQL_HOST = "localhost"
-MYSQL_USER = "root"
-MYSQL_PASSWORD = "tu_contraseña"
+MYSQL_USER = "flask_user"
+MYSQL_PASSWORD = "flask_password"
 MYSQL_DB = "app_bolsa"
-SECRET_KEY = "clave_super_secreta"
-JWT_SECRET_KEY = "clave_jwt_secreta"
+
