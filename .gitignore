@@ -1,0 +1,30 @@
+#FLASK Y PYTHON
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.local
+instance/
+db.sqlite3
+*.sqlite3
+logs/
+*.log
+.DS_Store
+
+#ANGULAR
+node_modules/
+dist/
+tmp/
+.angular/
+coverage/
+
+#GENERALES DEL SISTEMA
+*.swp
+*.swo
+*.bak
+*.tmp
+Thumbs.db
+.vscode/
+.idea/
