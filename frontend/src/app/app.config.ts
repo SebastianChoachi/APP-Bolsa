@@ -1,8 +1,19 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Routes } from '@angular/router';
+import { CryptoListComponent } from './cryptos/crypto-list/crypto-list.component';
+import { CryptoDetailComponent } from './cryptos/crypto-details/crypto-detail.component';
+import { provideHttpClient } from '@angular/common/http';
 
-import { routes } from './app.routes';
+const routes: Routes = [
+  { path: 'cryptos', component: CryptoListComponent },
+  { path: 'cryptos/:nombre', component: CryptoDetailComponent },
+  { path: '', redirectTo: 'cryptos', pathMatch: 'full' },
+  { path: '**', redirectTo: 'cryptos' }
+];
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
 };
