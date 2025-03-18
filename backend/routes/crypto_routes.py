@@ -19,9 +19,15 @@ def get_cryptos():
     
     return jsonify(crypto_list), 200
 
+# Obtener el histórico de precios de la crypto en X período
 @crypto_bp.route("/<string:crypto_id>", methods=["GET"])
 def get_crypto_history(crypto_id):
-    response = requests.get(f"{COINGECKO_API}/coins/{crypto_id}/market_chart?vs_currency=usd&days=30")
+    days = request.args.get("days", default=30, type=int)  # parámetro "days" (por defecto, 30 días)
+    
+    response = requests.get(f"{COINGECKO_API}/coins/{crypto_id}/market_chart?vs_currency=usd&days={days}")
+    
     if response.status_code == 200:
         return jsonify(response.json())
+    
     return jsonify({"error": "No se pudo obtener los datos"}), 500
+
