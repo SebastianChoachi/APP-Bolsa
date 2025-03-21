@@ -6,11 +6,44 @@ from flask_jwt_extended import create_access_token
 auth_bp = Blueprint("auth_bp", __name__)
 
 # REGISTRO DE USUARIO
+@auth_bp.route("/register", methods=["POST"])
+def register():
+    data = request.json
+    nombre = data.get("nombre")
+    email = data.get("email")
+    password = data.get("password")
+
+    if not nombre or not email or not password:
+        return jsonify({"error": "Todos los campos son obligatorios"}), 400
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT id FROM usuarios WHERE email = %s", (email,))
+    user_exists = cursor.fetchone()
+    
+    if user_exists:
+        cursor.close()
+        return jsonify({"error": "El email ya está registrado"}), 409
+
+    # Hashear contraseña (guardar como bytes)
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    cursor.execute("INSERT INTO usuarios (nombre, email, password) VALUES (%s, %s, %s)", 
+                   (nombre, email, hashed_password))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({"message": "Usuario registrado exitosamente"}), 201
+
+
+# LOGIN DE USUARIO
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.json
     email = data.get("email")
     password = data.get("password")
+
+    print(f"🔹 Email recibido: {email}")
+    print(f"🔹 Password recibido: {password}")
 
     if not email or not password:
         return jsonify({"error": "Email y contraseña son obligatorios"}), 400
