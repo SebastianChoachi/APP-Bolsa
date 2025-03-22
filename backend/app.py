@@ -15,10 +15,10 @@ app.config.from_pyfile('config.py')
 # Inicializar la base de datos
 init_db(app)
 
-# 🔹 Configurar clave secreta para JWT
+# Configurar clave secreta para JWT
 app.config["JWT_SECRET_KEY"] = "super_secret_key"  # Usar una clave segura en producción
 
-# 🔹 Inicializar JWTManager
+# Inicializar JWTManager
 jwt = JWTManager(app)  
 
 # Registrar rutas

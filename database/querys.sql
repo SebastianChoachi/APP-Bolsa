@@ -10,26 +10,28 @@ CREATE TABLE usuarios (
 );
 CREATE TABLE cryptos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
     simbolo VARCHAR(10) NOT NULL UNIQUE
 );
 CREATE TABLE alertas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    simbolo_crypto VARCHAR(10) NOT NULL,
+    crypto_name VARCHAR(10) NOT NULL,
     condicion VARCHAR(50) NOT NULL,
-    estado TINYINT(1) NOT NULL DEFAULT 1,  -- Campo booleano (1 = activo, 0 = inactivo)
+    precio DECIMAL(18, 2) NOT NULL,  -- Precio con 18 dígitos en total, 2 decimales
+    estado TINYINT(1) NOT NULL DEFAULT 1,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (simbolo_crypto) REFERENCES cryptos(simbolo) ON DELETE CASCADE
+    FOREIGN KEY (crypto_name) REFERENCES cryptos(nombre) ON DELETE CASCADE
 );
 
 SHOW TABLES;
 
 # Creación Registros Iniciales
-INSERT INTO usuarios (nombre, email, password) VALUES ('Juan Choachi', 'juansebastianchv@hotmail.com', 'password');
 INSERT INTO cryptos (nombre, simbolo) VALUES ('bitcoin','btc');
 INSERT INTO cryptos (nombre, simbolo) VALUES ('ethereum','eth');
 INSERT INTO cryptos (nombre, simbolo) VALUES ('tether','usdt');
 
 select * from usuarios;
 select * from cryptos;
+select * from alertas;
+

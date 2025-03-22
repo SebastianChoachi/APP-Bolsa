@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-alerts',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './alerts.component.html',
-  styleUrl: './alerts.component.scss'
+  templateUrl: './alerts.component.html'
 })
 export class AlertsComponent implements OnInit {
   alerts: any[] = [];

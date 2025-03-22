@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Mis Alertas</h2>
+  <button (click)="goToCreateAlert()">Crear Alerta</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Criptomoneda</th>
+        <th>Condición</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alert of alerts">
+        <td>{{ alert.crypto_name }}</td>
+        <td>{{ alert.condicion }}</td>
+        <td>{{ alert.precio | currency:'USD' }}</td>
+        <td>
+          <button (click)="deleteAlert(alert.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
