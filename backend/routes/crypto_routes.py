@@ -6,9 +6,9 @@ crypto_bp = Blueprint('crypto_bp', __name__)
 
 COINGECKO_API = "https://api.coingecko.com/api/v3"
 
+# Obtener la lista de criptomonedas almacenadas en la base de datos.
 @crypto_bp.route("/", methods=["GET"])
 def get_cryptos():
-    # Obtiene la lista de criptomonedas almacenadas en la base de datos.
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT id, nombre, simbolo FROM cryptos")
     cryptos = cursor.fetchall()
@@ -31,3 +31,34 @@ def get_crypto_history(crypto_id):
     
     return jsonify({"error": "No se pudo obtener los datos"}), 500
 
+# Obtener precios actuales para el listado de cryptos en BD
+@crypto_bp.route("/prices", methods=["GET"])
+def get_crypto_prices():
+    try:
+        # 1. Obtener lista de criptos desde la base de datos
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT nombre FROM cryptos")
+        cryptos = cursor.fetchall()
+        cursor.close()
+
+        # 2. Extraer nombres y formatearlos en una lista separada por comas
+        crypto_ids = ",".join([crypto[0] for crypto in cryptos])  # crypto[0] porque fetchall() devuelve una lista de tuplas
+
+        if not crypto_ids:
+            return jsonify({"error": "No hay criptomonedas registradas"}), 400
+
+        # 3. Consumo API de CoinGecko con las criptos de la BD
+        url = "https://api.coingecko.com/api/v3/simple/price"
+        params = {
+            "ids": crypto_ids,
+            "vs_currencies": "usd"
+        }
+        response = requests.get(url, params=params)
+        
+        if response.status_code != 200:
+            return jsonify({"error": "No se pudieron obtener los precios"}), 500
+        
+        return jsonify(response.json())  # Enviar datos al frontend
+
+    except Exception as e:
+        return jsonify({"error": f"Error interno: {str(e)}"}), 500

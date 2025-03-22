@@ -80,10 +80,7 @@ export class CryptoListComponent {
   }
 
   obtenerPrecios() {
-    const ids = this.cryptos.map(c => c.nombre.toLowerCase()).join(',');
-    //const apiKey = 'TU_API_KEY';  // Reemplaza con tu clave de CoinGecko (si aplica)
-
-    this.http.get<any>(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`)
+    this.http.get<any>('http://127.0.0.1:5000/cryptos/prices')
       .subscribe((precios) => {
         this.cryptos = this.cryptos.map(c => ({
           ...c,
@@ -91,7 +88,6 @@ export class CryptoListComponent {
         }));
       });
   }
-
 
   verDetalle(nombre: string) {
     this.router.navigate(['/cryptos', nombre]);

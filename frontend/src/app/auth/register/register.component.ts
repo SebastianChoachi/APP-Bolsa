@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';  // 🔹 Importar CommonModule
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  imports: [FormsModule, CommonModule]  // 🔹 Agregar CommonModule
 })
 export class RegisterComponent {
   nombre: string = '';
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  successMessage: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  onSubmit() {
-    const userData = { nombre: this.nombre, email: this.email, password: this.password };
-    console.log("📤 Enviando datos de registro:", userData); // Verificar en consola
-
-    this.http.post('http://localhost:5000/register', userData).subscribe({
+  register() {
+    this.http.post('http://localhost:5000/register', {
+      nombre: this.nombre,
+      email: this.email,
+      password: this.password
+    }).subscribe({
       next: (res) => {
-        console.log("✅ Registro exitoso", res);
-        alert("Registro exitoso");
+        this.successMessage = 'Registro exitoso. Redirigiendo...';
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err) => {
-        console.error("❌ Error en registro", err);
-        this.errorMessage = err.error?.error || "Error al registrarse";
+        this.errorMessage = err.error.error || 'Error en el registro';
       }
     });
   }
