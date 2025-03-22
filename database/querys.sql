@@ -18,9 +18,11 @@ CREATE TABLE alertas (
     id_usuario INT NOT NULL,
     simbolo_crypto VARCHAR(10) NOT NULL,
     condicion VARCHAR(50) NOT NULL,
+    estado TINYINT(1) NOT NULL DEFAULT 1,  -- Campo booleano (1 = activo, 0 = inactivo)
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (simbolo_crypto) REFERENCES cryptos(simbolo) ON DELETE CASCADE
 );
+
 SHOW TABLES;
 
 # Creación Registros Iniciales
@@ -30,3 +32,4 @@ INSERT INTO cryptos (nombre, simbolo) VALUES ('ethereum','eth');
 INSERT INTO cryptos (nombre, simbolo) VALUES ('tether','usdt');
 
 select * from usuarios;
+select * from cryptos;

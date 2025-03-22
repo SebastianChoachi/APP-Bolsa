@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="container">
+    <!-- Botón de Inicio -->
+    <button (click)="navigateTo('/cryptos')">Inicio</button>
+
+    <div class="buttons">
+      <!-- Si el usuario NO está autenticado -->
+      <ng-container *ngIf="!isAuthenticated(); else loggedIn">
+        <button (click)="navigateTo('/login')">Iniciar Sesión</button>
+        <button (click)="navigateTo('/register')">Registro</button>
+      </ng-container>
+
+      <!-- Si el usuario SÍ está autenticado -->
+      <ng-template #loggedIn>
+        <button (click)="navigateTo('/alerts')">Alertas</button>
+        <button (click)="logout()">Cerrar Sesión</button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

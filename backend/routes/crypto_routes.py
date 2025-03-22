@@ -15,7 +15,7 @@ def get_cryptos():
     cursor.close()
 
     # Convertir lista de tuplas a lista de diccionarios
-    crypto_list = [{"id": c[0], "nombre": c[1], "simbolo": c[2]} for c in cryptos]
+    crypto_list = [{"id": c[0], "nombre": c[1].lower(), "simbolo": c[2]} for c in cryptos]
     
     return jsonify(crypto_list), 200
 
@@ -42,7 +42,7 @@ def get_crypto_prices():
         cursor.close()
 
         # 2. Extraer nombres y formatearlos en una lista separada por comas
-        crypto_ids = ",".join([crypto[0] for crypto in cryptos])  # crypto[0] porque fetchall() devuelve una lista de tuplas
+        crypto_ids = ",".join([crypto[0].lower() for crypto in cryptos])  # crypto[0] porque fetchall() devuelve una lista de tuplas
 
         if not crypto_ids:
             return jsonify({"error": "No hay criptomonedas registradas"}), 400
