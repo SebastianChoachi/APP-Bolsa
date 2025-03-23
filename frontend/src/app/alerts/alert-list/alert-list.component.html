@@ -30,4 +30,10 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Marca cuando no hay alertas -->
+  <div *ngIf="alertas.length === 0" class="empty-alert">
+    <p>Aún no tienes alertas, ¿qué esperas para empezar?</p>
+  </div>
+
 </div>

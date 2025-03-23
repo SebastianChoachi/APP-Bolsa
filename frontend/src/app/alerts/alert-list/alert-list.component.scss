@@ -67,3 +67,11 @@ button {
 button:hover {
   background-color: #217dbb;
 }
+
+.empty-alert {
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.4); // Marca de agua semi-transparente
+  font-style: italic;
+  z-index: 0;
+}
