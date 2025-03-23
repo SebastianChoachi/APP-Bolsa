@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'alerts', component: AlertListComponent, canActivate: [AuthGuard]},
   { path: 'alerts/create', component: AlertFormComponent, canActivate: [AuthGuard]},
-  //{ path: 'alerts', component: AlertsComponent, canActivate: [AuthGuard] }, // Ruta Protegida para usuario logeados
 
   { path: '', redirectTo: 'cryptos', pathMatch: 'full' },
   { path: '**', redirectTo: 'cryptos' }

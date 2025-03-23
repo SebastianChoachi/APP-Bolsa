@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-alert-form',
   standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './alert-form.component.html',
-  styleUrls: ['./alert-form.component.scss'],
-  imports: [CommonModule, FormsModule]
+  styleUrls: ['./alert-form.component.scss']
 })
 export class AlertFormComponent implements OnInit {
   private alertsService = inject(AlertsService);

@@ -35,6 +35,6 @@ export class AlertListComponent {
   }
 
   goToCreateAlert() {
-    this.router.navigate(['/alerts/new']); // Redirigir al formulario de creación
+    this.router.navigate(['/alerts/create']); // Redirigir al formulario de creación
   }
 }
