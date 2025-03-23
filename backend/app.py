@@ -30,9 +30,15 @@ app.register_blueprint(alert_bp, url_prefix="/alerts")
 
 # Iniciar el proceso de verificación de alertas en segundo plano
 def start_alert_checker():
-    thread = threading.Thread(target=ejecutar_cada_x_minutos, daemon=True)
+    print("Iniciando el hilo de verificación de alertas...")
+    def run_with_context():
+        with app.app_context():  # Asegura que el hilo use el contexto de Flask
+            ejecutar_cada_x_minutos()
+    thread = threading.Thread(target=run_with_context, daemon=True)
     thread.start()
+    print("Hilo de alertas iniciado.")
+
+start_alert_checker()
 
 if __name__ == "__main__":
-    start_alert_checker()
-    app.run(debug=True)
+  app.run(debug=True)

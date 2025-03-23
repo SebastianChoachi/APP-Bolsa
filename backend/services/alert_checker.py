@@ -1,6 +1,7 @@
 import time
 from db import mysql
 import requests
+from flask import current_app
 
 def obtener_alertas_activas():
     cursor = mysql.connection.cursor()
@@ -64,16 +65,13 @@ def procesar_alertas():
 
 
 def ejecutar_cada_x_minutos():
-    """Ejecuta el proceso de verificación de alertas cada 5 minutos."""
-    while True:
-        alertas_cumplidas = procesar_alertas()
-        if alertas_cumplidas:
-            print(f"Se han cumplido {len(alertas_cumplidas)} alertas.")
-            # Aquí se llamaría a la función de envío de correos.
-        else:
-            print("No se cumplieron alertas en este ciclo.")
+    with current_app.app_context():  # Habilita el contexto de Flask
+        while True:
+            alertas_cumplidas = procesar_alertas()
+            if alertas_cumplidas:
+                print(f"Se han cumplido {len(alertas_cumplidas)} alertas.")
+                # Aquí se llamará a la función de envío de correos.
+            else:
+                print("No se cumplieron alertas en este ciclo.")
 
-        time.sleep(120)  # Timer de 2 minutos
-
-if __name__ == "__main__":
-    ejecutar_cada_x_minutos()
+            time.sleep(120)  # Se ejecuta cada 2 minutos
