@@ -5,6 +5,8 @@ from routes.auth_routes import auth_bp
 from routes.crypto_routes import crypto_bp
 from routes.alert_routes import alert_bp
 from flask_jwt_extended import JWTManager
+import threading
+from services.alert_checker import ejecutar_cada_x_minutos
 
 app = Flask(__name__)
 CORS(app)  # Permitir conexiones desde el frontend Angular
@@ -26,5 +28,11 @@ app.register_blueprint(auth_bp, url_prefix="/")
 app.register_blueprint(crypto_bp, url_prefix="/cryptos")
 app.register_blueprint(alert_bp, url_prefix="/alerts")
 
+# Iniciar el proceso de verificación de alertas en segundo plano
+def start_alert_checker():
+    thread = threading.Thread(target=ejecutar_cada_x_minutos, daemon=True)
+    thread.start()
+
 if __name__ == "__main__":
+    start_alert_checker()
     app.run(debug=True)

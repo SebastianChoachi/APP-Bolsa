@@ -36,3 +36,4 @@ select * from cryptos;
 select * from alertas;
 
 INSERT INTO alertas (id_usuario, crypto_name, condicion, precio) VALUES (1,'bitcoin', '<=', 84090.20);
+UPDATE alertas SET estado = 1 where id_usuario between 1 and 2;

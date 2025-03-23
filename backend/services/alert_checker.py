@@ -47,10 +47,9 @@ def procesar_alertas():
         cripto = alerta["crypto_name"]
         precio_actual = precios_actuales.get(cripto, None)
         if precio_actual is not None:
-            print(f"Revisando {cripto}: {alerta['condicion']} {alerta['precio']} (Precio actual: {precio_actual})")  # Debug
+            # print(f"Revisando {cripto}: {alerta['condicion']} {alerta['precio']} (Precio actual: {precio_actual})") 
             if (alerta["condicion"] == "mayor o igual" and precio_actual >= alerta["precio"]) or \
                (alerta["condicion"] == "menor o igual" and precio_actual <= alerta["precio"]):
-
                 # Marcar alerta como inactiva
                 cursor = mysql.connection.cursor()
                 cursor.execute("UPDATE alertas SET estado = 0 WHERE id = %s", (alerta["id"],))
@@ -59,13 +58,12 @@ def procesar_alertas():
 
                 alerta["precio_actual"] = precio_actual
                 alertas_cumplidas.append(alerta)
-
-                print(f"ALERTA {alerta['id']} cumplida para {cripto} (Precio actual: {precio_actual})")
+                # print(f"ALERTA {alerta['id']} cumplida para {cripto} (Precio actual: {precio_actual})")
 
     return alertas_cumplidas 
 
 
-def ejecutar_cada_5_minutos():
+def ejecutar_cada_x_minutos():
     """Ejecuta el proceso de verificación de alertas cada 5 minutos."""
     while True:
         alertas_cumplidas = procesar_alertas()
@@ -75,7 +73,7 @@ def ejecutar_cada_5_minutos():
         else:
             print("No se cumplieron alertas en este ciclo.")
 
-        time.sleep(300)  # Timer de 5 minutos
+        time.sleep(120)  # Timer de 2 minutos
 
 if __name__ == "__main__":
-    ejecutar_cada_5_minutos()
+    ejecutar_cada_x_minutos()
