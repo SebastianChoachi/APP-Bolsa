@@ -41,7 +41,7 @@ def get_alerts():
     return jsonify(alert_list), 200
 
 
-# Eliminar una alerta por ID
+# Eliminar una alerta del usuario logueado por ID
 @alert_bp.route("/<int:alert_id>", methods=["DELETE"])
 @jwt_required()
 def delete_alert(alert_id):
