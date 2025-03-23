@@ -1,6 +1,8 @@
 <div class="container">
-  <h2>Mis Alertas</h2>
-  <button (click)="goToCreateAlert()">➕ Nueva Alerta</button>
+  <div class="header">
+    <h2>📢 Mis Alertas</h2>
+    <button (click)="goToCreateAlert()">➕ Nueva Alerta</button>
+  </div>
 
   <table>
     <thead>
@@ -8,6 +10,7 @@
         <th>Criptomoneda</th>
         <th>Condición</th>
         <th>Precio</th>
+        <th>Estado</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -16,6 +19,11 @@
         <td>{{ alerta.crypto_name }}</td>
         <td>{{ alerta.condicion }}</td>
         <td>{{ alerta.precio | currency:'USD' }}</td>
+        <td>
+          <span [ngClass]="{'estado-activo': alerta.estado === 1, 'estado-inactivo': alerta.estado === 0}">
+            {{ alerta.estado === 1 ? 'Activa' : 'Finalizada' }}
+          </span>
+        </td>
         <td>
           <button (click)="eliminarAlerta(alerta.id)">🗑 Eliminar</button>
         </td>

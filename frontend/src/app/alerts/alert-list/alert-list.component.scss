@@ -16,10 +16,54 @@ th {
   background-color: #4CAF50;
   color: white;
 }
+.estado-activo {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.estado-inactivo {
+  color: #dc3545;
+  font-weight: bold;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #3498db;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
 button {
-  background-color: #008CBA;
+  background-color: #3498db;
   color: white;
-  padding: 5px 10px;
   border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #217dbb;
 }

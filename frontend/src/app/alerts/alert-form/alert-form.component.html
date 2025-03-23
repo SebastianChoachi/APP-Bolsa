@@ -1,21 +1,27 @@
-<div class="container">
+<div class="alert-form-container">
   <h2>Crear Nueva Alerta</h2>
-  <form (ngSubmit)="createAlert()">
+  <form (ngSubmit)="createAlert()" class="alert-form">
 
-    <label>Criptomoneda:</label>
-    <select [(ngModel)]="alertData.crypto_name" name="crypto_name" required>
-      <option *ngFor="let crypto of cryptos" [value]="crypto.nombre">{{ crypto.nombre }}</option>
-    </select>
+    <div class="form-group">
+      <label>Criptomoneda:</label>
+      <select [(ngModel)]="alertData.crypto_name" name="crypto_name" required>
+        <option *ngFor="let crypto of cryptos" [value]="crypto.nombre">{{ crypto.nombre }}</option>
+      </select>
+    </div>
 
-    <label>Condición:</label>
-    <select [(ngModel)]="alertData.condicion" name="condicion">
-      <option value="mayor o igual">Mayor o igual</option>
-      <option value="menor o igual">Menor o igual</option>
-    </select>
+    <div class="form-group">
+      <label>Condición:</label>
+      <select [(ngModel)]="alertData.condicion" name="condicion">
+        <option value="mayor o igual">Mayor o igual</option>
+        <option value="menor o igual">Menor o igual</option>
+      </select>
+    </div>
 
-    <label>Precio:</label>
-    <input type="number" [(ngModel)]="alertData.precio" name="precio" required>
+    <div class="form-group">
+      <label>Precio:</label>
+      <input type="number" [(ngModel)]="alertData.precio" name="precio" required>
+    </div>
 
-    <button type="submit">Guardar Alerta</button>
+    <button type="submit" class="btn-submit">Guardar Alerta</button>
   </form>
 </div>

@@ -30,7 +30,7 @@ export class AlertFormComponent implements OnInit {
 
   loadCryptos() {
     this.http.get<any[]>('http://localhost:5000/cryptos').subscribe(data => {
-      this.cryptos = data;
+      this.cryptos = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
     });
   }
 
