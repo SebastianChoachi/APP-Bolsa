@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AlertsService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/alerts';
+  private apiUrl = 'http://localhost:5000/alerts/';
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');  // Obtener token del localStorage
