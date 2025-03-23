@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';  // 🔹 Agregar CommonModule
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-crypto-list',
   standalone: true,
-  imports: [CommonModule],  // 🔹 Importar CommonModule
+  imports: [CommonModule],
   template: `
     <div class="container">
       <h2>Lista de Criptomonedas</h2>

@@ -1,3 +1,4 @@
+from venv import logger
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from db import mysql
@@ -27,10 +28,10 @@ def create_alert():
     return jsonify({"message": "Alerta creada exitosamente"}), 201
 
 # Obtener las alertas del usuario logueado
-@alert_bp.route("/", methods=["GET"])
+@alert_bp.route("/", methods=["GET"], strict_slashes=False)
 @jwt_required()
 def get_alerts():
-    current_user_id = get_jwt_identity()
+    current_user_id = get_jwt_identity() # obtener el id de usuario
     
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT id, crypto_name, condicion, precio, estado FROM alertas WHERE id_usuario = %s", (current_user_id,))

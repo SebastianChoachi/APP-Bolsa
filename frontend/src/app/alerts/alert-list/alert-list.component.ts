@@ -75,9 +75,9 @@ export class AlertListComponent {
   }
 
   cargarAlertas() {
-    const token = localStorage.getItem('token'); // Asegúrate de enviar el token
+    const token = localStorage.getItem('token');
 
-    this.http.get<any[]>('http://localhost:5000/alerts', {
+    this.http.get<any[]>('http://localhost:5000/alerts/', {
       headers: { Authorization: `Bearer ${token}` }
     }).subscribe({
       next: (data) => this.alertas = data,
