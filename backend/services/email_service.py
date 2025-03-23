@@ -1,24 +1,40 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from config import MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
+from flask import current_app
 
-def enviar_correo(destinatario, mensaje):
+def enviar_correo_alerta(destinatario, cripto, condicion, precio_objetivo, precio_actual):
     try:
+        # Obtener la configuración desde Flask
+        mail_server = current_app.config["MAIL_SERVER"]
+        mail_port = current_app.config["MAIL_PORT"]
+        mail_use_tls = current_app.config["MAIL_USE_TLS"]
+        mail_username = current_app.config["MAIL_USERNAME"]
+        mail_password = current_app.config["MAIL_PASSWORD"]
+        mail_sender = current_app.config["MAIL_USERNAME"]
+
+        asunto = f"Alerta de {cripto} cumplida"
+        cuerpo = f"""
+        <h2>Alerta cumplida</h2>
+        <p>La alerta configurada para <b>{cripto}</b> se ha cumplido:</p>
+        <ul>
+            <li><b>Condición:</b> {condicion} {precio_objetivo}</li>
+            <li><b>Precio actual:</b> {precio_actual}</li>
+        </ul>
+        <p>Revisa tu cuenta para más detalles.</p>
+        """
         msg = MIMEMultipart()
-        msg["From"] = MAIL_USERNAME
+        msg["From"] = mail_sender
         msg["To"] = destinatario
-        msg["Subject"] = "Alerta de criptomonedas cumplida"
+        msg["Subject"] = asunto
+        msg.attach(MIMEText(cuerpo, "html"))
 
-        msg.attach(MIMEText(mensaje, "plain"))
-
-        server = smtplib.SMTP(MAIL_SERVER, MAIL_PORT)
-        server.starttls()
-        server.login(MAIL_USERNAME, MAIL_PASSWORD)
-        server.sendmail(MAIL_USERNAME, destinatario, msg.as_string())
-        server.quit()
-        
-        print(f"📨 Correo enviado a {destinatario}")
+        # Conexión al servidor SMTP
+        with smtplib.SMTP(mail_server, mail_port) as server:
+            if mail_use_tls:
+                server.starttls()
+            server.login(mail_username, mail_password)
+            server.sendmail(mail_sender, destinatario, msg.as_string())
 
     except Exception as e:
-        print(f"❌ Error al enviar correo: {str(e)}")
+        print(f"Error al enviar correo a {destinatario}: {e}")
