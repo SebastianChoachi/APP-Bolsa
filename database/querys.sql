@@ -35,3 +35,4 @@ select * from usuarios;
 select * from cryptos;
 select * from alertas;
 
+INSERT INTO alertas (id_usuario, crypto_name, condicion, precio) VALUES (1,'bitcoin', '<=', 84090.20);

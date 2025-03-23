@@ -25,6 +25,6 @@ export class AlertsService {
   }
 
   deleteAlert(alertId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${alertId}`, { headers: this.getAuthHeaders() });
+    return this.http.delete<any>(`${this.apiUrl}${alertId}`, { headers: this.getAuthHeaders() });
   }
 }
