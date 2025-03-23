@@ -1,8 +1,37 @@
-<div class="crypto-list">
+<div class="container">
   <h2>Lista de Criptomonedas</h2>
-  <ul>
-    <li *ngFor="let crypto of cryptos">
-      {{ crypto.nombre }} ({{ crypto.simbolo }})
-    </li>
-  </ul>
+
+<!-- Buscador -->
+<input type="text" [(ngModel)]="filtro" (input)="filtrarLista()" placeholder="Buscar criptomoneda..." />
+
+<!-- Filtro de orden -->
+<select [(ngModel)]="orden" (change)="ordenarLista()" >
+  <option value="" disabled selected>Ordenar por...</option>
+  <option value="nombre">Nombre (A-Z)</option>
+  <option value="nombre_desc">Nombre (Z-A)</option>
+  <option value="precio">Precio (menor a mayor)</option>
+  <option value="precio_desc">Precio (mayor a menor)</option>
+</select>
+
+  <!--Tabla-->
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Símbolo</th>
+        <th>Precio Actual (USD)</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let crypto of cryptosFiltrados">
+        <td>{{ crypto.nombre }}</td>
+        <td>{{ crypto.simbolo }}</td>
+        <td>{{ crypto.precio | currency:'USD' }}</td>
+        <td>
+          <button (click)="verDetalle(crypto.nombre)">Ver Detalle</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
