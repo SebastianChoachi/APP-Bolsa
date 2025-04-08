@@ -16,35 +16,18 @@ export class AuthService {
     return this.http.post<{ message: string }>(
       `${this.apiUrl}/register`,
       { nombre, email, password }
-    ).subscribe({
-      next: (response) => {
-        console.log('Registro exitoso:', response.message);
-        this.router.navigate(['/login']); // Redirige al login después de registrar
-      },
-      error: (error) => {
-        console.error('Error en el registro:', error);
-      }
-    });
+    );
   }
 
+
   // LOGIN
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<{ message: string; user_id: number; token: string }> {
     return this.http.post<{ message: string; user_id: number; token: string }>(
       `${this.apiUrl}/login`,
       { email, password }
-    ).subscribe(
-      response => {
-
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user_id', String(response.user_id));
-
-        this.router.navigate(['/alerts']); // JSC: Redirigir a la página de alertas?
-      },
-      error => {
-        console.error('Error en el login:', error);
-      }
     );
   }
+
 
   // CERRAR SESIÓN
   logout() {

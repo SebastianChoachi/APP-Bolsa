@@ -20,6 +20,16 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.email, this.password);
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user_id', String(response.user_id));
+        this.router.navigate(['/alerts']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.error || 'Error al iniciar sesión';
+      }
+    });
   }
+
 }
